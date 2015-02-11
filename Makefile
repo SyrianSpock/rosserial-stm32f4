@@ -77,7 +77,7 @@ endif
 #
 
 # Define project name here
-PROJECT = ch
+PROJECT = rosserial-stm32f4
 
 # Imported source files and paths
 CHIBIOS = ChibiOS
@@ -134,7 +134,7 @@ ASMSRC = $(PORTASM)
 
 INCDIR = $(PORTINC) $(KERNINC) $(TESTINC) \
          $(HALINC) $(OSALINC) $(PLATFORMINC) $(BOARDINC) \
-         $(CHIBIOS)/os/various
+         $(CHIBIOS)/os/various ./src
 
 #
 # Project, sources and paths
@@ -204,3 +204,4 @@ ULIBS =
 
 RULESPATH = $(CHIBIOS)/os/common/ports/ARMCMx/compilers/GCC
 include $(RULESPATH)/rules.mk
+-include tools.mk
