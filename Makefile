@@ -82,13 +82,12 @@ PROJECT = rosserial-stm32f4
 # Imported source files and paths
 CHIBIOS = ChibiOS
 include $(CHIBIOS)/os/hal/hal.mk
-include $(CHIBIOS)/os/hal/boards/ST_NUCLEO_F401RE/board.mk
 include $(CHIBIOS)/os/hal/ports/STM32/STM32F4xx/platform.mk
 include $(CHIBIOS)/os/hal/osal/rt/osal.mk
 include $(CHIBIOS)/os/rt/rt.mk
 include $(CHIBIOS)/os/rt/ports/ARMCMx/compilers/GCC/mk/port_stm32f4xx.mk
 include $(CHIBIOS)/test/rt/test.mk
-
+include board/board.mk
 include src/src.mk
 
 # Define linker script file here
@@ -103,6 +102,7 @@ CSRC = $(PORTSRC) \
        $(OSALSRC) \
        $(PLATFORMSRC) \
        $(BOARDSRC) \
+       $(CHIBIOS)/os/various/chprintf.c \
        $(PROJSRC)
 
 # C++ sources that can be compiled in ARM or THUMB mode depending on the global
@@ -204,4 +204,5 @@ ULIBS =
 
 RULESPATH = $(CHIBIOS)/os/common/ports/ARMCMx/compilers/GCC
 include $(RULESPATH)/rules.mk
--include tools.mk
+
+include tools.mk

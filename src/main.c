@@ -17,6 +17,10 @@
 #include "ch.h"
 #include "hal.h"
 #include "test.h"
+#include "chprintf.h"
+#include <chstreams.h>
+
+BaseSequentialStream* stdout;
 
 /*
  * Red LED blinker thread, times are in milliseconds.
@@ -28,9 +32,9 @@ static THD_FUNCTION(Thread1, arg) {
   chRegSetThreadName("blinker");
   while (TRUE) {
     palClearPad(GPIOA, GPIOA_LED_GREEN);
-    chThdSleepMilliseconds(500);
+    chThdSleepMilliseconds(50);
     palSetPad(GPIOA, GPIOA_LED_GREEN);
-    chThdSleepMilliseconds(500);
+    chThdSleepMilliseconds(50);
   }
 }
 
@@ -53,6 +57,7 @@ int main(void) {
    * Activates the serial driver 2 using the driver default configuration.
    */
   sdStart(&SD2, NULL);
+  stdout = (BaseSequentialStream*)&SD2;
 
   /*
    * Creates the blinker thread.
@@ -64,8 +69,7 @@ int main(void) {
    * sleeping in a loop and check the button state.
    */
   while (TRUE) {
-    if (!palReadPad(GPIOC, GPIOC_BUTTON))
-      TestThread(&SD2);
-    chThdSleepMilliseconds(500);
+    chprintf(stdout, "Don't Panic.\r\n");
+    chThdSleepMilliseconds(1000);
   }
 }
