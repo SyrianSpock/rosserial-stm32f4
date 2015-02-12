@@ -5,7 +5,7 @@
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+            http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,19 +23,19 @@
 BaseSequentialStream* stdout;
 
 /*
- * Red LED blinker thread, times are in milliseconds.
+ * Green LED blinker thread, times are in milliseconds.
  */
 static THD_WORKING_AREA(waThread1, 128);
 static THD_FUNCTION(Thread1, arg) {
 
-  (void)arg;
-  chRegSetThreadName("blinker");
-  while (TRUE) {
-    palClearPad(GPIOA, GPIOA_LED_GREEN);
-    chThdSleepMilliseconds(50);
-    palSetPad(GPIOA, GPIOA_LED_GREEN);
-    chThdSleepMilliseconds(50);
-  }
+    (void)arg;
+    chRegSetThreadName("blinker");
+    while (TRUE) {
+        palClearPad(GPIOA, GPIOA_LED_GREEN);
+        chThdSleepMilliseconds(50);
+        palSetPad(GPIOA, GPIOA_LED_GREEN);
+        chThdSleepMilliseconds(50);
+    }
 }
 
 /*
@@ -43,33 +43,33 @@ static THD_FUNCTION(Thread1, arg) {
  */
 int main(void) {
 
-  /*
-   * System initializations.
-   * - HAL initialization, this also initializes the configured device drivers
-   *   and performs the board-specific initializations.
-   * - Kernel initialization, the main() function becomes a thread and the
-   *   RTOS is active.
-   */
-  halInit();
-  chSysInit();
+    /*
+     * System initializations.
+     * - HAL initialization, this also initializes the configured device drivers
+     *     and performs the board-specific initializations.
+     * - Kernel initialization, the main() function becomes a thread and the
+     *     RTOS is active.
+     */
+    halInit();
+    chSysInit();
 
-  /*
-   * Activates the serial driver 2 using the driver default configuration.
-   */
-  sdStart(&SD2, NULL);
-  stdout = (BaseSequentialStream*)&SD2;
+    /*
+     * Activates the serial driver 2 using the driver default configuration.
+     */
+    sdStart(&SD2, NULL);
+    stdout = (BaseSequentialStream*)&SD2;
 
-  /*
-   * Creates the blinker thread.
-   */
-  chThdCreateStatic(waThread1, sizeof(waThread1), NORMALPRIO, Thread1, NULL);
+    /*
+     * Creates the blinker thread.
+     */
+    chThdCreateStatic(waThread1, sizeof(waThread1), NORMALPRIO, Thread1, NULL);
 
-  /*
-   * Normal main() thread activity, in this demo it does nothing except
-   * sleeping in a loop and check the button state.
-   */
-  while (TRUE) {
-    chprintf(stdout, "Don't Panic.\r\n");
-    chThdSleepMilliseconds(1000);
-  }
+    /*
+     * Normal main() thread activity, in this demo it does nothing except
+     * sleeping in a loop and check the button state.
+     */
+    while (TRUE) {
+        chprintf(stdout, "Don't Panic.\r\n");
+        chThdSleepMilliseconds(1000);
+    }
 }
